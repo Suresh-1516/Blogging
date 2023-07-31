@@ -14,4 +14,5 @@ a user-friendly platform featuring registration, authentication, seamless blog c
 ![Screenshot (136)](https://github.com/Suresh-1516/Blogging/assets/112805852/58aad927-3967-46b2-ab74-c5d7a6dea0eb)
 ![Screenshot (137)](https://github.com/Suresh-1516/Blogging/assets/112805852/476fb2ac-c030-4307-8788-d2d9dcfd643a)
 
-https://www.youtube.com/watch?v=Tc9aaCK2JUY
+YOUTUBE : 
+     https://www.youtube.com/watch?v=Tc9aaCK2JUY
