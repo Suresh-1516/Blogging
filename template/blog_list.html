@@ -1,0 +1,269 @@
+{% load static %}
+<!DOCTYPE html>
+
+<head>
+    <title>blog_list</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<style>
+    h1.elegantshadow {
+
+        font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
+        font-size: 70px;
+        padding: 50px 50px;
+        text-align: center;
+        text-transform: uppercase;
+        text-rendering: optimizeLegibility;
+        margin: auto;
+        width: 50%;
+        color: #ecad39;
+        background-color: #e7e5e4;
+        width: 60%;
+        margin-top: 50px;
+        border-radius: 20px;
+        letter-spacing: 0.15em;
+        text-shadow: 1px -1px 0 #000000, -1px 2px 1px #737272, -2px 4px 1px #767474, -3px 6px 1px #787777, -4px 8px 1px #7b7a7a;
+    }
+
+    #button:hover {
+        color: rgba(0, 0, 0, 0.5);
+    }
+
+    #button:focus {
+        zoom: 1;
+        filter: alpha(opacity=80);
+        opacity: 0.8;
+    }
+
+    #wrapper {
+        padding: 100px;
+        margin: auto;
+        width: 54.5%;
+        background-color: #e7e5e498;
+        border-radius: 20px;
+        letter-spacing: 0.15em;
+        margin-top: 10px;
+        font-size: 25px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    #wrapper h1 {
+        color: rgb(104, 104, 248);
+        text-shadow: 1px -1px 0 #d61717;
+    }
+
+    #paper {
+        margin: auto;
+        width: 50%;
+    }
+
+    /* coments */
+
+    .tip {
+        width: 0px;
+        height: 0px;
+        position: absolute;
+        background: transparent;
+        border: 10px solid #ccc;
+    }
+
+    .tip-up {
+        top: -25px;
+        /* Same as body margin top + border */
+        left: 10px;
+        border-right-color: transparent;
+        border-left-color: transparent;
+        border-top-color: transparent;
+    }
+
+    .tip-down {
+        bottom: -25px;
+        left: 10px;
+        border-right-color: transparent;
+        border-left-color: transparent;
+        border-bottom-color: transparent;
+    }
+
+    .tip-left {
+        top: 10px;
+        left: -25px;
+        border-top-color: transparent;
+        border-left-color: transparent;
+        border-bottom-color: transparent;
+    }
+
+    .tip-right {
+        top: 10px;
+        right: -25px;
+        border-top-color: transparent;
+        border-right-color: transparent;
+        border-bottom-color: transparent;
+    }
+
+    .dialogbox .body {
+        position: relative;
+        max-width: 110%;
+        height: auto;
+        margin: 20px 10px;
+        padding: 20px;
+        background-color: #ececec;
+        border-radius: 3px;
+        border: 5px solid #ccc;
+        padding-left: 30px;
+    }
+
+    .body .message {
+        min-height: 30px;
+        border-radius: 3px;
+        font-family: Arial;
+        font-size: 15px;
+        line-height: 1.5;
+        font-size: 20px;
+        color: #535353;
+    }
+
+    /* cancel btn */
+
+    .button-close {
+        align-items: center;
+        appearance: none;
+        background-color: #FCFCFD;
+        border-radius: 4px;
+        border-width: 0;
+        box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+        box-sizing: border-box;
+        color: #36395A;
+        cursor: pointer;
+        display: inline-flex;
+        font-family: "JetBrains Mono", monospace;
+        height: 48px;
+        justify-content: center;
+        line-height: 1;
+        list-style: none;
+        overflow: hidden;
+        padding-left: 16px;
+        padding-right: 16px;
+        position: relative;
+        text-align: left;
+        text-decoration: none;
+        transition: box-shadow .15s, transform .15s;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        white-space: nowrap;
+        will-change: box-shadow, transform;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .button-close:focus {
+        box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+    }
+
+    .button-close:hover {
+        box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+        transform: translateY(-2px);
+        font-weight: bold;
+        color: blue;
+    }
+
+    .button-close:active {
+        box-shadow: #D6D6E7 0 3px 7px inset;
+        transform: translateY(2px);
+    }
+
+    #like {
+        font-size: 50px;
+        cursor: pointer;
+        margin-top: -70px;
+        float: right;
+        color: white;
+        text-shadow: 0 0 3px black;
+    }
+
+    #like:hover {
+        color: rgb(224, 12, 12);
+    }
+</style>
+
+<body>
+
+
+    <h1 class='elegantshadow'>{{blog_title}}</h1>
+
+    <div id="wrapper">
+
+        <div style="position: absolute;right: 400px;top: 350px;">
+            {% if like is True %}
+            <i onclick="like_false('{{id}}')" class="fa fa-heart" id="like" style="color: red;"></i>
+            {% else %}
+            <i onclick="like_true('{{id}}')" class="fa fa-heart" id="like" style="color: white;"></i>
+            {% endif %}
+
+        </div>
+        <div style="position: absolute;width: 5%;text-align: center;right: 380px;top:320px;">
+            <p aria-disabled="true"
+                style="font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;font-size: 20px;word-spacing: -0.5ch;">
+                Likes-{{likes}}</p>
+        </div>
+
+        {{blog_body | safe}}
+    </div>
+
+    <form id="paper" method="post" action="{% url 'comment' id=id %}">
+        {% csrf_token %}
+        {% for i in comment %}
+        <div class="dialogbox">
+            <div class="body">
+                <span class="tip tip-up"></span>
+                <div class="message">
+                    <span><b>{{i.0}}</b></span>
+                    <span style="float: right;"><strong>@{{i.1}}</strong></span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="dialogbox">
+            <div class="body" style="padding: 50px;">
+                <textarea name="comment"
+                    style="background-color: #ebebeb;text-decoration: none;border: 0px solid black ;position: absolute;margin-top: -52px;min-width: 96.1%;max-width: 96.1%; margin-left: -52px;color: #000000;min-height: 65px;max-height: 65px;padding: 20px;font-size: 25px;font-family: Verdana, Geneva, Tahoma, sans-serif;font-weight: bold;"
+                    maxlength="100" placeholder="Drop your comments here..." required></textarea>
+            </div>
+            <button id="post" class="button-close" role="button" type="submit"
+                style="float: right;margin-right: 13px;">Post</button>
+        </div>
+
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
+    </form>
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script>
+
+    var i = 0;
+
+    function like_false(id) {
+
+        $('#like').css("color", "white");
+        window.location.replace("{% url 'likes' id=id status=False %}");
+    }
+
+    function like_true(id) {
+
+        $('#like').css("color", "red");
+        window.location.replace("{% url 'likes' id=id status=True %}");
+    }
+</script>
+
+</html>

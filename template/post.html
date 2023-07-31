@@ -1,0 +1,245 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Dasebored</title>
+    <link href="https://demo.dashboardpack.com/architectui-html-free/main.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<style>
+    .button-24 {
+        background: #FF4742;
+        border: 1px solid #FF4742;
+        border-radius: 6px;
+        box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+        box-sizing: border-box;
+        color: #FFFFFF;
+        cursor: pointer;
+        display: inline-block;
+        font-family: nunito, roboto, proxima-nova, "proxima nova", sans-serif;
+        font-size: 16px;
+        font-weight: 800;
+        line-height: 16px;
+        min-height: 40px;
+        outline: 0;
+        padding: 14px 17px;
+        text-align: center;
+        text-rendering: geometricprecision;
+        text-transform: none;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        vertical-align: middle;
+    }
+
+    .button-24:hover,
+    .button-24:active {
+        background-color: initial;
+        background-position: 0 0;
+        color: #FF4742;
+    }
+
+    .button-24:active {
+        opacity: .5;
+    }
+
+    .log_out_button {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        width: 12rem;
+        height: 3rem;
+        border-radius: 4px;
+        font-size: 16px;
+        color: rgba(255, 255, 255, 0.8);
+        font-family: "Lexend Deca", sans-serif;
+        text-decoration: none;
+        cursor: pointer;
+        user-select: none;
+        transition: 0.2s;
+
+        &.animation-reveal {
+            animation: reveal 1s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .log_out_profile_pic img {
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #fff;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 4px;
+            margin-right: 1.6rem;
+            font-size: 24px;
+            color: #000;
+            background-position: center center;
+            background-size: 100px;
+            border: 1px solid black;
+            box-shadow: 0 0 5px black;
+        }
+
+        .log_out_text {
+            background-color: #ffffff;
+            border-radius: 4px;
+            color: #000;
+            font-weight: bold;
+            padding: 0.5rem 0.6rem;
+            transition: 0.2s;
+            font-size: 24px;
+        }
+
+        .log_out_text:hover {
+            color: #2b51dc;
+        }
+    }
+
+    ul li:hover {
+        color: #0f3cef;
+    }
+
+
+    /*********** Title ***********/
+
+
+    .group {
+        position: relative;
+        margin-bottom: 45px;
+    }
+
+    .group input {
+        font-size: 18px;
+        padding: 10px 10px 10px 5px;
+        display: block;
+        width: 70%;
+        margin-left: 0px;
+        border: none;
+        border-bottom: 1px solid #757575;
+        font-weight: bold;
+        padding-left: 50px;
+        margin-bottom: 80px;
+    }
+
+    .django-ckeditor-widget {
+        width: 100%;
+    }
+
+    .group label {
+        color: #999;
+        font-size: 20px;
+        font-weight: normal;
+        position: absolute;
+        pointer-events: none;
+        left: 0px;
+        top: 10px;
+        transition: 0.2s ease all;
+        -moz-transition: 0.2s ease all;
+        -webkit-transition: 0.2s ease all;
+        margin-left: 100px;
+        visibility: hidden;
+
+    }
+
+    #id_blog_user,
+    #id_category {
+        visibility: hidden;
+        position: absolute;
+    }
+
+    #category_selection {
+
+        background-color: #2b51dc;
+        float: right;
+        color: white;
+
+    }
+</style>
+
+<body>
+    <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+
+        <div class="app-header header-shadow">
+            <div>
+                <a href="{% url 'dashboard' %}">
+                    <img src="/static/pen.png" style="width: 21%;margin-left: 28px;margin-top: -10px;">
+                    <label aria-disabled="true"
+                        style="font-family: cursive;font-size: 30px;margin-left: 15px;margin-top: 1px;cursor: pointer;">Blogging</label>
+                </a>
+            </div>
+            <div style="position: absolute;margin-left: 200px;">
+                {% if user.is_authenticated %}
+                <label id="user_name"
+                    style="margin-left: 100px;font-size: 30px;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;margin-top: 10px;">
+                    @{{user.username}}</label>
+                {% else %}
+                <label
+                    style="margin-left: 100px;font-size: 30px;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;margin-top: 10px;">
+                    Log in</label>
+                {% endif %}
+            </div>
+            <div class="log_out_button" style="margin-top: 0px;margin-left: 1450px;">
+                <a href="{% url 'logout' %}">
+                    <span class="log_out_text" style="padding-right: 20px;font-size: 20px;cursor: pointer;">Log
+                        out</span>
+                </a>
+                <div class="log_out_profile_pic"><img src="/static/user.png"></div>
+            </div>
+        </div>
+
+        <div style="margin-top:150px;">
+
+            <div class="group" style="position: absolute;width: 90%;">
+                <form style="font-size: 30px;margin-left: 100px;width: 100%;" method="post"
+                    action="{% url 'create_blog_post' %}">
+                    {% csrf_token %}
+
+                    <button type="submit" class="button-24" style="float: right;margin-right: 10px;"
+                        role="button">Publish <span style="font-size: 17px;">&#10150;</span></button>
+
+                    <select id="category_selection" style="margin-right: 80px;border-radius: 5px;padding: 2px 20px 2px 10px;" onclick="selection()">
+                        <option value="1">Travel blogs</option>
+                        <option value="2">Business blogs</option>
+                        <option value="3">News blogs</option>
+                        <option value="4">Movie blogs</option>
+                        <option value="5">Food blogs</option>
+                        <option value="0">Others</option>
+                    </select>
+
+                    {{ form.media }}
+                    {{ form.as_p }}
+                </form>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+        document.getElementById("id_title").placeholder = "Title";
+        document.getElementById("id_blog_user").value = $("#user_name").text();
+    });
+
+    function selection() {
+        document.getElementById("id_category").value = $("#category_selection option:selected").text();
+    }
+
+</script>
+
+</html>
